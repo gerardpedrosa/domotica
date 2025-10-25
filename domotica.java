@@ -76,8 +76,21 @@ public class domotica {
                         roomName = "Bathroom";
                         break;
                     default:
+                    System.out.println("Invalid room");
+                    break;
                 }
-                    controlStatus(roomName, onOff);
+
+            if (!roomName.isEmpty()) controlStatus(roomName, onOff);
+                break;
+
+            case "b":
+                controlAllL(sc);
+                break;
+            case "c":
+                showState();
+                break;
+            case "d":
+            return;
         }
 
     }       
@@ -139,6 +152,28 @@ public class domotica {
                 break;
         }
     }
+    public static void controlAllL (Scanner sc) {
+        System.out.println("Write on/off to switch all rooms");
+        String onOff = sc.next().toLowerCase();
+
+        h1L = onOff;
+        h2L = onOff;
+        h3L = onOff;
+        livingromL = onOff;
+        kitchenL = onOff;
+        bathroomL = onOff;
+
+        System.out.println("All lights turned "  + onOff + "  correctly.");
+    }
+    public static void showState() {
+        System.out.println("State of the lights:");
+        System.out.println("H1 ("  + h1L + ")");
+        System.out.println("H2 ("  + h2L + ")");
+        System.out.println("H3 ("  + h3L + ")");
+        System.out.println("Livingroom ("  + livingromL + ")");
+        System.out.println("Kitchen ("  + kitchenL + ")");
+        System.out.println("Bathroom ("  + bathroomL + ")");
+    }
     public static void doors(Scanner sc) {
         System.out.println("----Doors control----");
         System.out.println("a. Control a room door");
@@ -181,6 +216,8 @@ public class domotica {
                         roomName = "Bathroom";
                         break;
                     default:
+                    System.out.println("Invalid room");
+                    break;
                 }
     
                 controlDoors(roomName, openClose);
