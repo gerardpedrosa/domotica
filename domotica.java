@@ -34,6 +34,7 @@ public class domotica {
         while (menuInicial); {
         }
     }
+
     public static void lights(Scanner sc){
         System.out.println("----Lights control----");
         System.out.println("a. Control a room");
@@ -53,7 +54,7 @@ public class domotica {
                 String roomSelect = sc.nextLine();
 
                 System.out.println("Write ON/OFF");
-                String onOff = sc.next().toLowerCase();
+                String onOff = sc.next().toUpperCase();
                 String roomName = "";
 
                 switch (roomSelect) {
@@ -87,13 +88,13 @@ public class domotica {
                 controlAllL(sc);
                 break;
             case "c":
-                showState();
+                showStateL();
                 break;
             case "d":
-            return;
+                break;
         }
+    }
 
-    }       
     public static void controlStatus(String room, String onOff) {
 
         switch (room) {
@@ -152,9 +153,10 @@ public class domotica {
                 break;
         }
     }
+
     public static void controlAllL (Scanner sc) {
         System.out.println("Write on/off to switch all rooms");
-        String onOff = sc.next().toLowerCase();
+        String onOff = sc.next().toUpperCase();
 
         h1L = onOff;
         h2L = onOff;
@@ -165,7 +167,8 @@ public class domotica {
 
         System.out.println("All lights turned "  + onOff + "  correctly.");
     }
-    public static void showState() {
+
+    public static void showStateL() {
         System.out.println("State of the lights:");
         System.out.println("H1 ("  + h1L + ")");
         System.out.println("H2 ("  + h2L + ")");
@@ -192,8 +195,8 @@ public class domotica {
                 System.out.println("vi. Bathroom");
                 String roomSelect = sc.nextLine();
 
-                System.out.println("Write OPEN/CLOSED");
-                String openClose = sc.next().toLowerCase();
+                System.out.println("Write OPEN/CLOSE");
+                String openClose = sc.next().toUpperCase();
                 String roomName = "";
 
                 switch (roomSelect) {
@@ -219,9 +222,19 @@ public class domotica {
                     System.out.println("Invalid room");
                     break;
                 }
-    
-                controlDoors(roomName, openClose);
-        }     
+                
+            if (!roomName.isEmpty()) controlDoors(roomName, openClose);
+                break;
+
+            case "b":
+                controlAllD(sc);
+                break;
+            case "c":
+                showStateD();
+                break;
+            case "d":
+                break;
+        }
     }
     public static void controlDoors(String room, String openClose) {
 
@@ -280,5 +293,28 @@ public class domotica {
                 }
                 break;
         }
+    }
+
+    public static void controlAllD (Scanner sc) {
+        System.out.println("Write OPEN/CLOSE to switch all rooms");
+        String openClose = sc.next().toUpperCase();
+
+        h1D = openClose;
+        h2D = openClose;
+        h3L = openClose;
+        livingromD = openClose;
+        kitchenD = openClose;
+        bathroomD = openClose;
+
+        System.out.println("All doors are "  + openClose);
+    }
+    public static void showStateD() {
+        System.out.println("State of the doors:");
+        System.out.println("H1 ("  + h1D + ")");
+        System.out.println("H2 ("  + h2D + ")");
+        System.out.println("H3 ("  + h3D + ")");
+        System.out.println("Livingroom ("  + livingromD + ")");
+        System.out.println("Kitchen ("  + kitchenD + ")");
+        System.out.println("Bathroom ("  + bathroomD + ")");
     }
 }
