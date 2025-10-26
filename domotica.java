@@ -4,17 +4,28 @@ import java.util.Arrays;
 
 public class domotica {
 
-    //variables globals 
+    //variables globals
+
+    //lights
     static String lights, h1L = "OFF", h2L = "OFF", h3L = "OFF", kitchenL = "OFF", livingromL = "OFF", bathroomL = "OFF", lightsState = "OFF";
+    
+    //doors
     static String doors, h1D = "CLOSED", h2D = "CLOSED", h3D = "CLOSED", kitchenD = "CLOSED", livingromD = "CLOSED", bathroomD = "CLOSED", doorsState = "CLOSED";
+    
+    //heating
     static double h1T = 25.0, h2T = 25.0, h3T = 25.0, kitchenT = 25.0, livingroomT = 25.0, bathroomT = 25.0;
     static String heating, h1H = "OFF", h2H = "OFF", h3H = "OFF", kitchenH = "OFF", livingroomH = "OFF", bathroomH = "OFF";
+   
+    //music
     static double h1V = 0, h2V = 0, h3V = 0, kitchenV = 0, livingroomV = 0, bathroomV = 0;
     static String music, h1M = "OFF", h2M = "OFF", h3M = "OFF", kitchenM = "OFF", livingromM = "OFF", bathroomM = "OFF", musicState = "OFF";
+    
+    //others
     static boolean menuInicial = true;
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
     
+    //inicial menu
         do {
         
             System.out.println("---- Domotica ----");
@@ -53,6 +64,7 @@ public class domotica {
         }
     }
 
+    //menu lights
     public static void lights(Scanner sc){
         System.out.println("----Lights control----");
         System.out.println("a. Control a room");
@@ -112,6 +124,7 @@ public class domotica {
         }
     }
 
+    //metodes lights
     public static void controlStatus(String room, String onOff) {
 
         switch (room) {
@@ -193,6 +206,8 @@ public class domotica {
         System.out.println("Kitchen ("  + kitchenL + ")");
         System.out.println("Bathroom ("  + bathroomL + ")");
     }
+    
+    //menu doors
     public static void doors(Scanner sc) {
         System.out.println("----Doors control----");
         System.out.println("a. Control a room door");
@@ -251,6 +266,8 @@ public class domotica {
                 break;
         }
     }
+
+    //metodes doors
     public static void controlDoors(String room, String openClose) {
 
         switch (room) {
@@ -330,6 +347,8 @@ public class domotica {
         System.out.println("Kitchen ("  + kitchenD + ")");
         System.out.println("Bathroom ("  + bathroomD + ")");
     }
+
+    //menu heating
     public static void heating(Scanner sc) {
         System.out.println("----Heating control----");
         System.out.println("a. Set temperature of a room");
@@ -376,6 +395,8 @@ public class domotica {
             break;
         }
     }
+
+    //metodes heating
     public static void setTemperature(String roomSelect, double temp) {
         switch (roomSelect) {
             case "i": 
@@ -447,6 +468,8 @@ public class domotica {
         System.out.println("Living Room: " + livingroomT + "°C (" + livingroomH + ")");
         System.out.println("Bathroom: " + bathroomT + "°C (" + bathroomH + ")");
     }
+
+    //menu music
     public static void music(Scanner sc) {
         System.out.println("---- Music Control ----");
         System.out.println("a. Set volume of a room");
@@ -499,6 +522,7 @@ public class domotica {
         }
     }
 
+    //metodes music
     public static void setVolume(String roomSelect, double volume) {
         if (volume < 0 || volume > 100) {
             System.out.println("Volume must be between 0 and 100.");
@@ -566,6 +590,7 @@ public class domotica {
         System.out.println("Bathroom: Volume " + bathroomV + " (" + bathroomM + ")");
     }
 
+    //metodes validacions
     public static int readIntInRange(Scanner sc, String prompt, int min, int max) {
         int value = 0;
         boolean valid = false;
