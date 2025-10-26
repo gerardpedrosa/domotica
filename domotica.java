@@ -5,7 +5,8 @@ public class domotica {
     //variables globals 
     static String lights, h1L = "OFF", h2L = "OFF", h3L = "OFF", kitchenL = "OFF", livingromL = "OFF", bathroomL = "OFF", lightsState = "OFF";
     static String doors, h1D = "CLOSED", h2D = "CLOSED", h3D = "CLOSED", kitchenD = "CLOSED", livingromD = "CLOSED", bathroomD = "CLOSED", doorsState = "CLOSED";
-    static boolean heating = false;
+    static double h1T = 25.0, h2T = 25.0, h3T = 25.0, kitchenT = 25.0, livingroomT = 25.0, bathroomT = 25.0;
+    static String heating, h1H = "OFF", h2H = "OFF", h3H = "OFF", kitchenH = "OFF", livingroomH = "OFF", bathroomH = "OFF";
     static boolean music = false;
     static boolean menuInicial = true;
     static Scanner sc = new Scanner(System.in);
@@ -28,6 +29,9 @@ public class domotica {
                 break;
                 case 2:
                     doors(sc);
+                break;
+                case 3:
+                    heating(sc);
                 break;      
         }
         }
@@ -316,5 +320,124 @@ public class domotica {
         System.out.println("Livingroom ("  + livingromD + ")");
         System.out.println("Kitchen ("  + kitchenD + ")");
         System.out.println("Bathroom ("  + bathroomD + ")");
+    }
+    public static void heating(Scanner sc) {
+        System.out.println("----Heating control----");
+        System.out.println("a. Set temperature of a room");
+        System.out.println("b. Turn ON/OFF heating of a room");
+        System.out.println("c. Show the current temperature and heating state");
+        System.out.println("d. Exit");
+
+        switch (sc.nextLine()) {
+            case "a":
+                System.out.println("----Select a room----");
+                System.out.println("i. H1");
+                System.out.println("ii. H2");
+                System.out.println("iii. H3");
+                System.out.println("iv. Kitchen");
+                System.out.println("v. Living Room");
+                System.out.println("vi. Bathroom");
+                String roomSelect = sc.nextLine();
+
+                System.out.println("Enter desired temperature (°C):");
+                double temp = sc.nextDouble();
+                sc.nextLine();
+                setTemperature(roomSelect, temp);
+            break;
+
+            case "b":
+                System.out.println("----Select a room----");
+                System.out.println("i. H1");
+                System.out.println("ii. H2");
+                System.out.println("iii. H3");
+                System.out.println("iv. Kitchen");
+                System.out.println("v. Living Room");
+                System.out.println("vi. Bathroom");
+                roomSelect = sc.nextLine();
+
+                System.out.println("Write ON/OFF:");
+                String onOff = sc.next().toUpperCase();
+                sc.nextLine();
+                controlHeating(roomSelect, onOff);
+            break;
+
+            case "c":
+                showHeatingState();
+            break;
+
+            case "d":
+            break;
+        }
+    }
+    public static void setTemperature(String roomSelect, double temp) {
+        switch (roomSelect) {
+            case "i": 
+                h1T = temp; 
+            break;
+
+            case "ii": 
+                h2T = temp; 
+            break;
+
+            case "iii": 
+                h3T = temp; 
+            break;
+
+            case "iv": 
+                kitchenT = temp; 
+            break;
+
+            case "v": 
+                livingroomT = temp; 
+            break;
+
+            case "vi": 
+                bathroomT = temp; 
+            break;
+
+            default: System.out.println("Invalid room"); return;
+        }
+        System.out.println("Temperature set successfully.");
+    }
+    public static void controlHeating(String roomSelect, String onOff) {
+        switch (roomSelect) {
+            case "i": 
+                h1H = onOff; 
+            break;
+
+            case "ii": 
+                h2H = onOff; 
+            break;
+
+            case "iii": 
+                h3H = onOff; 
+            break;
+
+            case "iv": 
+                kitchenH = onOff; 
+            break;
+
+            case "v": 
+                livingroomH = onOff; 
+            break;
+
+            case "vi": 
+                bathroomH = onOff; 
+            break;
+
+            default: 
+                System.out.println("Invalid room"); 
+            break;
+        }
+        System.out.println("Heating of selected room is now " + onOff + ".");
+    }
+    public static void showHeatingState() {
+        System.out.println("---- Heating Status ----");
+        System.out.println("H1: " + h1T + "°C (" + h1H + ")");
+        System.out.println("H2: " + h2T + "°C (" + h2H + ")");
+        System.out.println("H3: " + h3T + "°C (" + h3H + ")");
+        System.out.println("Kitchen: " + kitchenT + "°C (" + kitchenH + ")");
+        System.out.println("Living Room: " + livingroomT + "°C (" + livingroomH + ")");
+        System.out.println("Bathroom: " + bathroomT + "°C (" + bathroomH + ")");
     }
 }
