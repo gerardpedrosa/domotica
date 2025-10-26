@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import java.util.Arrays;
+
 public class domotica {
 
     //variables globals 
@@ -21,24 +23,32 @@ public class domotica {
             System.out.println("3. Heating");
             System.out.println("4. Music System");
             System.out.println("5. Exit");
-            int select = sc.nextInt();
-            sc.nextLine();
+            int select = readIntInRange(sc, "Select an option:", 1, 5);
 
             switch (select) {
                 case 1:
                     lights(sc);
                 break;
+
                 case 2:
                     doors(sc);
                 break;
+
                 case 3:
                     heating(sc);
                 break;
+
                 case 4:
                     music(sc);
                 break;
-        }
-        }
+
+                case 5:
+                    menuInicial = false;
+                break;
+
+                default:
+                    System.out.println("Invalid option. Please select a valid option.");}
+            }
         while (menuInicial); {
         }
     }
@@ -61,8 +71,7 @@ public class domotica {
                 System.out.println("vi. Bathroom");
                 String roomSelect = sc.nextLine();
 
-                System.out.println("Write ON/OFF");
-                String onOff = sc.next().toUpperCase();
+                String onOff = readState(sc, "Write ON/OFF:", "ON", "OFF");
                 String roomName = "";
 
                 switch (roomSelect) {
@@ -163,8 +172,7 @@ public class domotica {
     }
 
     public static void controlAllL (Scanner sc) {
-        System.out.println("Write on/off to switch all rooms");
-        String onOff = sc.next().toUpperCase();
+        String onOff = readState(sc, "Write ON/OFF to switch all rooms:", "ON", "OFF");
 
         h1L = onOff;
         h2L = onOff;
@@ -203,8 +211,7 @@ public class domotica {
                 System.out.println("vi. Bathroom");
                 String roomSelect = sc.nextLine();
 
-                System.out.println("Write OPEN/CLOSE");
-                String openClose = sc.next().toUpperCase();
+                String openClose = readState(sc, "Write OPEN/CLOSE:", "OPEN", "CLOSE");
                 String roomName = "";
 
                 switch (roomSelect) {
@@ -248,67 +255,66 @@ public class domotica {
 
         switch (room) {
             case "H1":
-                if (h1L.equals(openClose)) {
+                if (h1D.equals(openClose)) {
                     System.out.println("The door of " + room + " is currently " + openClose + ".");
                 } else {
-                    h1L = openClose;
+                    h1D = openClose;
                     System.out.println("The door of " + room + " is now " + openClose + ".");
                 }
                 break;
             
             case "H2":
-                if (h2L.equals(openClose)) {
+                if (h2D.equals(openClose)) {
                     System.out.println("The door of " + room + " is currently " + openClose + ".");
                 } else {
-                    h2L = openClose;
+                    h2D = openClose;
                     System.out.println("The door of " + room + " is now " + openClose + ".");
                 }
                 break;
             
             case "H3":
-                if (h3L.equals(openClose)) {
+                if (h3D.equals(openClose)) {
                     System.out.println("The door of " + room + " is currently " + openClose + ".");
                 } else {
-                    h3L = openClose;
+                    h3D = openClose;
                     System.out.println("The door of " + room + " is now " + openClose + ".");
                 }
                 break;
             
             case "Livingroom":
-                if (livingromL.equals(openClose)) {
+                if (livingromD.equals(openClose)) {
                     System.out.println("The door of " + room + " is currently " + openClose + ".");
                 } else {
-                    livingromL = openClose;
+                    livingromD = openClose;
                     System.out.println("The door of " + room + " is now " + openClose + ".");
                 }
                 break;
 
             case "Kitchen":
-                if (kitchenL.equals(openClose)) {
+                if (kitchenD.equals(openClose)) {
                     System.out.println("The door of " + room + " is currently " + openClose + ".");
                 } else {
-                    kitchenL = openClose;
+                    kitchenD = openClose;
                     System.out.println("The door of " + room + " is now " + openClose + ".");
                 }
                 break;
             
             case "Bathroom":
-                if (bathroomL.equals(openClose)) {
+                if (bathroomD.equals(openClose)) {
                     System.out.println("The door of " + room + " is currently " + openClose + ".");
                 } else {
-                    bathroomL = openClose;
+                    bathroomD = openClose;
                     System.out.println("The door of " + room + " is now " + openClose + ".");
                 }
                 break;
         }
     }
     public static void controlAllD (Scanner sc) {
-        System.out.println("Write OPEN/CLOSE to switch all rooms");
-        String openClose = sc.next().toUpperCase();
+        String openClose = readState(sc, "Write OPEN/CLOSE to switch all rooms:", "OPEN", "CLOSE");
 
         h1D = openClose;
         h2D = openClose;
-        h3L = openClose;
+        h3D = openClose;
         livingromD = openClose;
         kitchenD = openClose;
         bathroomD = openClose;
@@ -342,10 +348,9 @@ public class domotica {
                 System.out.println("vi. Bathroom");
                 String roomSelect = sc.nextLine();
 
-                System.out.println("Enter desired temperature (°C):");
-                double temp = sc.nextDouble();
-                sc.nextLine();
+                double temp = readDoubleInRange(sc, "Enter desired temperature (°C) [10.0 - 35.0]:", 10.0, 35.0);
                 setTemperature(roomSelect, temp);
+                
             break;
 
             case "b":
@@ -358,10 +363,9 @@ public class domotica {
                 System.out.println("vi. Bathroom");
                 roomSelect = sc.nextLine();
 
-                System.out.println("Write ON/OFF:");
-                String onOff = sc.next().toUpperCase();
-                sc.nextLine();
+                String onOff = readState(sc, "Write ON/OFF:", "ON", "OFF");
                 controlHeating(roomSelect, onOff);
+
             break;
 
             case "c":
@@ -463,9 +467,7 @@ public class domotica {
                 System.out.println("vi. Bathroom");
                 String roomSelect = sc.nextLine();
 
-                System.out.println("Enter desired volume (0–100):");
-                double volume = sc.nextDouble();
-                sc.nextLine();
+                double volume = readDoubleInRange(sc, "Enter desired volume (0–100):", 0.0, 100.0);
                 setVolume(roomSelect, volume);
             break;
 
@@ -479,10 +481,9 @@ public class domotica {
                 System.out.println("vi. Bathroom");
                 roomSelect = sc.nextLine();
 
-                System.out.println("Write ON/OFF:");
-                String state = sc.next().toUpperCase();
-                sc.nextLine();
+                String state = readState(sc, "Write ON/OFF:", "ON", "OFF");
                 controlRoomMusic(roomSelect, state);
+
             break;
 
             case "c":
@@ -563,5 +564,72 @@ public class domotica {
         System.out.println("Kitchen: Volume " + kitchenV + " (" + kitchenM + ")");
         System.out.println("Living Room: Volume " + livingroomV + " (" + livingromM + ")");
         System.out.println("Bathroom: Volume " + bathroomV + " (" + bathroomM + ")");
+    }
+
+    public static int readIntInRange(Scanner sc, String prompt, int min, int max) {
+        int value = 0;
+        boolean valid = false;
+        do {
+            System.out.println(prompt);
+
+            if (sc.hasNextInt()) {
+                value = sc.nextInt();
+                
+                if (value >= min && value <= max) {
+                    valid = true;
+                } else {
+                    System.out.println("Invalid range. The value should be between " + min + " and " + max + ".");
+                }
+            } else {
+                System.out.println("Invalid. Enter a valid number.");
+                sc.next();
+            }
+        } while (!valid);
+        
+        sc.nextLine();
+        return value;
+    }
+
+    public static double readDoubleInRange(Scanner sc, String prompt, double min, double max) {
+        double value = 0;
+        boolean valid = false;
+        do {
+            System.out.println(prompt);
+
+            if (sc.hasNextDouble()) {
+                value = sc.nextDouble();
+
+                if (value >= min && value <= max) {
+                    valid = true;
+                } else {
+                    System.out.println("Invalid range. The value should be between " + min + " y " + max + ".");
+                }
+            } else {
+                System.out.println("Invalid enter. Enter a number.");
+                sc.next();
+            }
+        } while (!valid);
+        
+        sc.nextLine();
+        return value;
+    }
+
+    public static String readState(Scanner sc, String prompt, String... validStates) {
+        String input;
+        boolean valid = false;
+        String allowedStates = String.join("/", validStates);
+
+        do {
+            System.out.println(prompt);
+            input = sc.nextLine().toUpperCase();
+
+            if (Arrays.asList(validStates).contains(input)) {
+                valid = true;
+            } else {
+                System.out.println("Invalid. The alowed values are: " +  allowedStates);
+            }
+        } while (!valid);
+        
+        return input;
     }
 }
