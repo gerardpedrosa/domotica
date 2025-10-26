@@ -7,7 +7,8 @@ public class domotica {
     static String doors, h1D = "CLOSED", h2D = "CLOSED", h3D = "CLOSED", kitchenD = "CLOSED", livingromD = "CLOSED", bathroomD = "CLOSED", doorsState = "CLOSED";
     static double h1T = 25.0, h2T = 25.0, h3T = 25.0, kitchenT = 25.0, livingroomT = 25.0, bathroomT = 25.0;
     static String heating, h1H = "OFF", h2H = "OFF", h3H = "OFF", kitchenH = "OFF", livingroomH = "OFF", bathroomH = "OFF";
-    static boolean music = false;
+    static double h1V = 0, h2V = 0, h3V = 0, kitchenV = 0, livingroomV = 0, bathroomV = 0;
+    static String music, h1M = "OFF", h2M = "OFF", h3M = "OFF", kitchenM = "OFF", livingromM = "OFF", bathroomM = "OFF", musicState = "OFF";
     static boolean menuInicial = true;
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
@@ -32,7 +33,10 @@ public class domotica {
                 break;
                 case 3:
                     heating(sc);
-                break;      
+                break;
+                case 4:
+                    music(sc);
+                break;
         }
         }
         while (menuInicial); {
@@ -298,7 +302,6 @@ public class domotica {
                 break;
         }
     }
-
     public static void controlAllD (Scanner sc) {
         System.out.println("Write OPEN/CLOSE to switch all rooms");
         String openClose = sc.next().toUpperCase();
@@ -439,5 +442,126 @@ public class domotica {
         System.out.println("Kitchen: " + kitchenT + "°C (" + kitchenH + ")");
         System.out.println("Living Room: " + livingroomT + "°C (" + livingroomH + ")");
         System.out.println("Bathroom: " + bathroomT + "°C (" + bathroomH + ")");
+    }
+    public static void music(Scanner sc) {
+        System.out.println("---- Music Control ----");
+        System.out.println("a. Set volume of a room");
+        System.out.println("b. Turn ON/OFF music in a room");
+        System.out.println("c. Show volume and music state in all rooms");
+        System.out.println("d. Exit");
+
+        String option = sc.nextLine();
+
+        switch (option) {
+            case "a":
+                System.out.println("----Select a room----");
+                System.out.println("i. H1");
+                System.out.println("ii. H2");
+                System.out.println("iii. H3");
+                System.out.println("iv. Kitchen");
+                System.out.println("v. Living Room");
+                System.out.println("vi. Bathroom");
+                String roomSelect = sc.nextLine();
+
+                System.out.println("Enter desired volume (0–100):");
+                double volume = sc.nextDouble();
+                sc.nextLine();
+                setVolume(roomSelect, volume);
+            break;
+
+            case "b":
+                System.out.println("----Select a room----");
+                System.out.println("i. H1");
+                System.out.println("ii. H2");
+                System.out.println("iii. H3");
+                System.out.println("iv. Kitchen");
+                System.out.println("v. Living Room");
+                System.out.println("vi. Bathroom");
+                roomSelect = sc.nextLine();
+
+                System.out.println("Write ON/OFF:");
+                String state = sc.next().toUpperCase();
+                sc.nextLine();
+                controlRoomMusic(roomSelect, state);
+            break;
+
+            case "c":
+                showMusicState();
+            break;
+
+            case "d":
+            break;
+
+            default:
+                System.out.println("Invalid option.");
+            break;
+        }
+    }
+
+    public static void setVolume(String roomSelect, double volume) {
+        if (volume < 0 || volume > 100) {
+            System.out.println("Volume must be between 0 and 100.");
+            return;
+        }
+
+        switch (roomSelect) {
+            case "i": h1V = volume; break;
+            case "ii": h2V = volume; break;
+            case "iii": h3V = volume; break;
+            case "iv": kitchenV = volume; break;
+            case "v": livingroomV = volume; break;
+            case "vi": bathroomV = volume; break;
+            default: System.out.println("Invalid room"); return;
+        }
+        System.out.println("Volume set successfully.");
+    }
+
+    public static void controlRoomMusic(String roomSelect, String state) {
+
+        while (!state.equals("ON") && !state.equals("OFF")) {
+            System.out.println("Invalid. Please write ON or OFF:");
+            state = sc.nextLine().toUpperCase();
+        }
+
+        switch (roomSelect) {
+            case "i": 
+                h1M = state; 
+            break;
+
+            case "ii": 
+                h2M = state; 
+            break;
+
+            case "iii": 
+                h3M = state; 
+            break;
+
+            case "iv": 
+                kitchenM = state; 
+            break;
+
+            case "v": 
+                livingromM = state; 
+            break;
+
+            case "vi": 
+                bathroomM = state; 
+            break;
+
+            default: 
+                System.out.println("Invalid room"); 
+            break;
+        }
+        System.out.println("Music in selected room is now " + state + ".");
+    }
+
+    public static void showMusicState() {
+        System.out.println("---- Music Status ----");
+        System.out.println("H1: Volume " + h1V + " (" + h1M + ")");
+        System.out.println("H2: Volume " + h2V + " (" + h2M + ")");
+        System.out.println("H3: Volume " + h3V + " (" + h3M + ")");
+        System.out.println("Kitchen: Volume " + kitchenV + " (" + kitchenM + ")");
+        System.out.println("Living Room: Volume " + livingroomV + " (" + livingromM + ")");
+        System.out.println("Bathroom: Volume " + bathroomV + " (" + bathroomM + ")");
     }
 }
