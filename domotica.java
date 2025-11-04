@@ -7,10 +7,10 @@ public class domotica {
     //variables globals
 
     //lights
-    static String lights, h1L = "OFF", h2L = "OFF", h3L = "OFF", kitchenL = "OFF", livingromL = "OFF", bathroomL = "OFF", lightsState = "OFF";
+    static String lights, h1L = "OFF", h2L = "OFF", h3L = "OFF", kitchenL = "OFF", livongroomL = "OFF", bathroomL = "OFF", lightsState = "OFF";
     
     //doors
-    static String doors, h1D = "CLOSED", h2D = "CLOSED", h3D = "CLOSED", kitchenD = "CLOSED", livingromD = "CLOSED", bathroomD = "CLOSED", doorsState = "CLOSED";
+    static String doors, h1D = "CLOSED", h2D = "CLOSED", h3D = "CLOSED", kitchenD = "CLOSED", livongroomD = "CLOSED", bathroomD = "CLOSED", doorsState = "CLOSED";
     
     //heating
     static double h1T = 25.0, h2T = 25.0, h3T = 25.0, kitchenT = 25.0, livingroomT = 25.0, bathroomT = 25.0;
@@ -18,12 +18,13 @@ public class domotica {
    
     //music
     static double h1V = 0, h2V = 0, h3V = 0, kitchenV = 0, livingroomV = 0, bathroomV = 0;
-    static String music, h1M = "OFF", h2M = "OFF", h3M = "OFF", kitchenM = "OFF", livingromM = "OFF", bathroomM = "OFF", musicState = "OFF";
+    static String music, h1M = "OFF", h2M = "OFF", h3M = "OFF", kitchenM = "OFF", livongroomM = "OFF", bathroomM = "OFF", musicState = "OFF";
     
     //others
     static boolean menuInicial = true;
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
+    
     
     //inicial menu
         do {
@@ -156,10 +157,10 @@ public class domotica {
                 break;
             
             case "Livingroom":
-                if (livingromL.equals(onOff)) {
+                if (livongroomL.equals(onOff)) {
                     System.out.println("The light ofl " + room + " is currently " + onOff + ".");
                 } else {
-                    livingromL = onOff;
+                    livongroomL = onOff;
                     System.out.println("The light ofl " + room + " is now " + onOff + ".");
                 }
                 break;
@@ -190,7 +191,7 @@ public class domotica {
         h1L = onOff;
         h2L = onOff;
         h3L = onOff;
-        livingromL = onOff;
+        livongroomL = onOff;
         kitchenL = onOff;
         bathroomL = onOff;
 
@@ -202,7 +203,7 @@ public class domotica {
         System.out.println("H1 ("  + h1L + ")");
         System.out.println("H2 ("  + h2L + ")");
         System.out.println("H3 ("  + h3L + ")");
-        System.out.println("Livingroom ("  + livingromL + ")");
+        System.out.println("Livingroom ("  + livongroomL + ")");
         System.out.println("Kitchen ("  + kitchenL + ")");
         System.out.println("Bathroom ("  + bathroomL + ")");
     }
@@ -299,10 +300,10 @@ public class domotica {
                 break;
             
             case "Livingroom":
-                if (livingromD.equals(openClose)) {
+                if (livongroomD.equals(openClose)) {
                     System.out.println("The door of " + room + " is currently " + openClose + ".");
                 } else {
-                    livingromD = openClose;
+                    livongroomD = openClose;
                     System.out.println("The door of " + room + " is now " + openClose + ".");
                 }
                 break;
@@ -332,7 +333,7 @@ public class domotica {
         h1D = openClose;
         h2D = openClose;
         h3D = openClose;
-        livingromD = openClose;
+        livongroomD = openClose;
         kitchenD = openClose;
         bathroomD = openClose;
 
@@ -343,7 +344,7 @@ public class domotica {
         System.out.println("H1 ("  + h1D + ")");
         System.out.println("H2 ("  + h2D + ")");
         System.out.println("H3 ("  + h3D + ")");
-        System.out.println("Livingroom ("  + livingromD + ")");
+        System.out.println("Livingroom ("  + livongroomD + ")");
         System.out.println("Kitchen ("  + kitchenD + ")");
         System.out.println("Bathroom ("  + bathroomD + ")");
     }
@@ -475,7 +476,8 @@ public class domotica {
         System.out.println("a. Set volume of a room");
         System.out.println("b. Turn ON/OFF music in a room");
         System.out.println("c. Show volume and music state in all rooms");
-        System.out.println("d. Exit");
+        System.out.println("d. Sync all room volumes to Livingroom volume");
+        System.out.println("e. Exit");
 
         String option = sc.nextLine();
 
@@ -514,6 +516,10 @@ public class domotica {
             break;
 
             case "d":
+                syncMusicVolumes();
+            break;
+
+            case "e":
             break;
 
             default:
@@ -566,7 +572,7 @@ public class domotica {
             break;
 
             case "v": 
-                livingromM = state; 
+                livongroomM = state; 
             break;
 
             case "vi": 
@@ -586,9 +592,39 @@ public class domotica {
         System.out.println("H2: Volume " + h2V + " (" + h2M + ")");
         System.out.println("H3: Volume " + h3V + " (" + h3M + ")");
         System.out.println("Kitchen: Volume " + kitchenV + " (" + kitchenM + ")");
-        System.out.println("Living Room: Volume " + livingroomV + " (" + livingromM + ")");
+        System.out.println("Living Room: Volume " + livingroomV + " (" + livongroomM + ")");
         System.out.println("Bathroom: Volume " + bathroomV + " (" + bathroomM + ")");
     }
+
+    public static void syncMusicVolumes() {
+    double livingVol = livingroomV;
+    
+    for (int i = 1; i <= 6; i++) {
+        switch (i) {
+            case 1:
+                h1V = livingVol;
+                break;
+            case 2:
+                h2V = livingVol;
+                break;
+            case 3:
+                h3V = livingVol;
+                break;
+            case 4:
+                kitchenV = livingVol;
+                break;
+            case 5:
+                bathroomV = livingVol;
+                break;
+            case 6:
+                livingroomV = livingVol;
+                break;
+        }
+    }
+
+    System.out.println("All room volumes have been synced to the Living Room volume (" + livingVol + ")");
+}
+
 
     //metodes validacions
     public static int readIntInRange(Scanner sc, String prompt, int min, int max) {
