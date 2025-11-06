@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-import java.util.Arrays;
 
 public class domotica {
 
@@ -355,7 +354,8 @@ public class domotica {
         System.out.println("a. Set temperature of a room");
         System.out.println("b. Turn ON/OFF heating of a room");
         System.out.println("c. Show the current temperature and heating state");
-        System.out.println("d. Exit");
+        System.out.println("d. Automatizate heating");
+        System.out.println("e. Exit");
 
         switch (sc.nextLine()) {
             case "a":
@@ -393,6 +393,10 @@ public class domotica {
             break;
 
             case "d":
+                automatizateHeating();
+            break;
+
+            case "e":
             break;
         }
     }
@@ -470,6 +474,78 @@ public class domotica {
         System.out.println("Bathroom: " + bathroomT + "°C (" + bathroomH + ")");
     }
 
+    public static void automatizateHeating() {
+    System.out.println("---- Automatic Heating Control ----");
+    System.out.println("Select a room:");
+    System.out.println("i. H1");
+    System.out.println("ii. H2");
+    System.out.println("iii. H3");
+    System.out.println("iv. Kitchen");
+    System.out.println("v. Living Room");
+    System.out.println("vi. Bathroom");
+    String roomSelect = sc.nextLine();
+
+    System.out.print("Enter the hour when you want to change the temperature (0 - 23): ");
+    int targetHour = sc.nextInt();
+    sc.nextLine();
+
+    if (targetHour < 0 || targetHour > 23) {
+        System.out.println("Invalid hour. It must be between 0 and 23.");
+        return;
+    }
+
+    System.out.print("Enter the new desired temperature (°C) [10.0 - 35.0]: ");
+    double newTemp = sc.nextDouble();
+    sc.nextLine();
+
+    if (newTemp < 10.0 || newTemp > 35.0) {
+        System.out.println("Invalid temperature. Must be between 10.0 and 35.0 °C.");
+        return;
+    }
+
+    System.out.println("Simulating time passing...");
+
+    for (int hour = 0; hour < 24; hour++) {
+        System.out.println("Current hour: " + hour);
+
+        if (hour == targetHour) {
+            System.out.println("Automatically adjusting temperature...");
+
+            switch (roomSelect) {
+                case "i":
+                    h1T = newTemp;
+                    break;
+                case "ii":
+                    h2T = newTemp;
+                    break;
+                case "iii":
+                    h3T = newTemp;
+                    break;
+                case "iv":
+                    kitchenT = newTemp;
+                    break;
+                case "v":
+                    livingroomT = newTemp;
+                    break;
+                case "vi":
+                    bathroomT = newTemp;
+                    break;
+                default:
+                    System.out.println("Invalid room.");
+                    return;
+            }
+
+            System.out.println("Temperature successfully adjusted to " + newTemp + "°C.");
+            break;
+        }
+        try {
+            Thread.sleep(200);
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    }
     //menu music
     public static void music(Scanner sc) {
         System.out.println("---- Music Control ----");
@@ -624,8 +700,7 @@ public class domotica {
 
     System.out.println("All room volumes have been synced to the Living Room volume (" + livingVol + ")");
 }
-
-
+ 
     //metodes validacions
     public static int readIntInRange(Scanner sc, String prompt, int min, int max) {
         int value = 0;
@@ -675,22 +750,21 @@ public class domotica {
         return value;
     }
 
-    public static String readState(Scanner sc, String prompt, String... validStates) {
-        String input;
-        boolean valid = false;
-        String allowedStates = String.join("/", validStates);
+    public static String readState(Scanner sc, String prompt, String valid1, String valid2) {
+    String input;
+    boolean valid = false;
 
-        do {
-            System.out.println(prompt);
-            input = sc.nextLine().toUpperCase();
+    do {
+        System.out.println(prompt);
+        input = sc.nextLine().toUpperCase();
 
-            if (Arrays.asList(validStates).contains(input)) {
-                valid = true;
-            } else {
-                System.out.println("Invalid. The alowed values are: " +  allowedStates);
-            }
-        } while (!valid);
-        
-        return input;
+        if (input.equals(valid1) || input.equals(valid2)) {
+            valid = true;
+        } else {
+            System.out.println("Invalid. Allowed values are: " + valid1 + "/" + valid2);
+        }
+    } while (!valid);
+
+    return input;
     }
 }
