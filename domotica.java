@@ -25,7 +25,7 @@ public class domotica {
     public static void main(String[] args) {
     
     
-    //inicial menu
+    //menu inicial
         do {
         
             System.out.println("---- Domotica ----");
@@ -766,4 +766,4 @@ public class domotica {
 
     return input;
     }
-}
+} 
